@@ -77,20 +77,6 @@ public class Interface extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        jButton1.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		// ------------------------------------CONSULTAR TABELA LIVRO -----------------------------
-        		modeloLivro.setNumRows(0);
-        		ConexaoTabelas bd = new ConexaoTabelas();
-        		String texto = jTextField1.getText().trim();
-        		int opcao = jComboBox1.getSelectedIndex();
-        		
-        		for(Livro l:bd.consultarLivro(texto,opcao)) {
-        			modeloLivro.addRow(new Object[] {l.getIsbn(),l.getTitulo(),l.getAutor(),l.getGenero(),l.getEstado()});
-        		}
-        	
-        	}
-        });
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
@@ -99,19 +85,6 @@ public class Interface extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
-        jButton3.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		// -------------------------------PROCURAR AUTOR----------------------------------
-        		modeloAutor.setNumRows(0);
-        		ConexaoTabelas bd = new ConexaoTabelas();
-        		String texto = jTextField2.getText().trim();
-        		int opcao = jComboBox2.getSelectedIndex();
-        		
-        		for(Autor a:bd.consultarAutor(texto)) {
-        			modeloAutor.addRow(new Object[] {a.getNome(),a.getSexo()});
-        		}
-        	}
-        });
         jButton4 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -120,20 +93,6 @@ public class Interface extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jComboBox3 = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
-        jButton5.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		//--------------PESQUISAR REGISTRO DE EMPRÉSTIMO ------------------------------
-        		modeloEmprestimo.setNumRows(0);
-        		ConexaoTabelas bd = new ConexaoTabelas();
-        		String texto = jTextField3.getText().trim();
-        		int opcao = jComboBox2.getSelectedIndex();
-        		
-        		for(Emprestimo emp:bd.consultarEmprestimo(texto, opcao)) {
-        			modeloEmprestimo.addRow(new Object[] {emp.getId(),emp.getLeitor(),emp.getLivro(),emp.getTelefone(),emp.getEndereco(),emp.getEmprestimo(),emp.getDevolucao()});
-        		}
-        		
-        	}
-        });
         jButton6 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
@@ -141,9 +100,11 @@ public class Interface extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Gerenciamento de Biblioteca");
 
+        jPanel1.setBackground(new java.awt.Color(0, 204, 102));
+
         jLabel1.setText("Consulta:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Título", "Autor", "Gênero" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Autor", "Gênero", "Título" }));
 
         jButton1.setText("Pesquisar");
 
@@ -166,11 +127,11 @@ public class Interface extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ISBN","Título", "Autor", "Gênero","Estado"
+                "Título", "Autor", "Classificação"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false,false,false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -178,36 +139,6 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        
-        popupMenu = new JPopupMenu();
-        addPopup(jTable1, popupMenu);
-        
-        mntmRemover = new JMenuItem("Remover");
-        mntmRemover.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		// DELETAR LINHA DA TABELA
-        		ConexaoTabelas bd = new ConexaoTabelas();
-        		String isbn = modeloLivro.getValueAt(jTable1.getSelectedRow(),0).toString();
-        		
-        		if(bd.deleteLivro(isbn)) {
-        			modeloLivro.removeRow(jTable1.getSelectedRow());
-        		}
-        	}
-        });
-        popupMenu.add(mntmRemover);
-        
-        mntmModificar = new JMenuItem("Modificar");
-        mntmModificar.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		String isbn = modeloLivro.getValueAt(jTable1.getSelectedRow(),0).toString();
-        		String titulo= modeloLivro.getValueAt(jTable1.getSelectedRow(),1).toString();
-        		String autor = modeloLivro.getValueAt(jTable1.getSelectedRow(),2).toString();
-        		String genero = modeloLivro.getValueAt(jTable1.getSelectedRow(),3).toString();
-        		
-        		new AtualizacaoLivro(isbn,titulo,autor,genero).setVisible(true);
-        	}
-        });
-        popupMenu.add(mntmModificar);
 
         jButton2.setText("Cadastrar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -256,7 +187,7 @@ public class Interface extends javax.swing.JFrame {
 
         jLabel2.setText("Consulta:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome"}));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CPF", "Código", "Livro" }));
 
         jButton3.setText("Pesquisar");
 
@@ -286,11 +217,11 @@ public class Interface extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Nome", "Sexo"
+                "Título", "Autor", "Classificação"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -298,36 +229,6 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTable2);
-        
-        popupMenu_1 = new JPopupMenu();
-        addPopup(jTable2, popupMenu_1);
-        
-        mntmRemover_1 = new JMenuItem("Remover");
-        mntmRemover_1.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		// REMOVER AUTOR
-        		
-        		ConexaoTabelas bd = new ConexaoTabelas();
-        		String nome = modeloAutor.getValueAt(jTable2.getSelectedRow(),0).toString();
-        		
-        		if(bd.deleteAutor(nome)) {
-        			modeloAutor.removeRow(jTable2.getSelectedRow());
-        		}
-        		
-        	}
-        });
-        popupMenu_1.add(mntmRemover_1);
-        
-        mntmModificar_1 = new JMenuItem("Modificar");
-        mntmModificar_1.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		String nome = (modeloAutor.getValueAt(jTable2.getSelectedRow(),0)).toString();
-        		String sexo = (modeloAutor.getValueAt(jTable2.getSelectedRow(),1)).toString();
-        		
-        		new AtualizacaoAutor(nome,sexo).setVisible(true);
-        	}
-        });
-        popupMenu_1.add(mntmModificar_1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -369,11 +270,11 @@ public class Interface extends javax.swing.JFrame {
 
         jLabel3.setText("Consulta:");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Leitor", "Livro" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Autor", "Leitor", "Título" }));
 
         jButton5.setText("Pesquisar");
 
-        jButton6.setText("Emprestar");
+        jButton6.setText("Cadastrar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -399,11 +300,11 @@ public class Interface extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ID","Leitor", "Livro", "Telefone","Endereço","Empréstimo","Devolução"
+                "Título", "Autor", "Classificação"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false,false,false,false,false,false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -411,61 +312,6 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(jTable3);
-        
-        popupMenu_2 = new JPopupMenu();
-        addPopup(jTable3, popupMenu_2);
-        
-        mntmRemover_2 = new JMenuItem("Remover");
-        mntmRemover_2.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		// REMOVER EMPRÉSTIMO
-        		ConexaoTabelas bd = new ConexaoTabelas();
-        		int id = Integer.parseInt(modeloEmprestimo.getValueAt(jTable3.getSelectedRow(),0).toString());
-        		String isbn = (modeloEmprestimo.getValueAt(jTable3.getSelectedRow(),2)).toString();
-
-        		if(bd.deleteEmprestimo(id)) {
-        			modeloEmprestimo.removeRow(jTable3.getSelectedRow());
-                    		bd.updateEstado(isbn,"Disponível");
-        		}
-        		
-        	}
-        });
-        
-        mntmExecutarDevoluo = new JMenuItem("Executar Devolu\u00E7\u00E3o");
-        mntmExecutarDevoluo.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		ConexaoTabelas bd = new ConexaoTabelas();
-        		int id = Integer.parseInt(modeloEmprestimo.getValueAt(jTable3.getSelectedRow(),0).toString());
-        		String isbn = (modeloEmprestimo.getValueAt(jTable3.getSelectedRow(),2)).toString();
-
-        		if(modeloEmprestimo.getValueAt(jTable3.getSelectedRow(),6)!=null) {
-        			JOptionPane.showMessageDialog(null,"Este livro ja foi devolvido!","ERRO",JOptionPane.ERROR_MESSAGE);
-        			return;
-        		}
-        		bd.executarDevolucao(id);
-        		bd.updateEstado(isbn,"Disponível");
-
-        	}
-        });
-        popupMenu_2.add(mntmExecutarDevoluo);
-        popupMenu_2.add(mntmRemover_2);
-        
-        mntmModificar_2 = new JMenuItem("Modificar");
-        mntmModificar_2.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		ConexaoTabelas bd = new ConexaoTabelas();
-        		
-        		int id = Integer.parseInt(modeloEmprestimo.getValueAt(jTable3.getSelectedRow(),0).toString());
-        		String leitor = modeloEmprestimo.getValueAt(jTable3.getSelectedRow(),1).toString();
-        		Livro livro = bd.consultarLivroEspecifico(modeloEmprestimo.getValueAt(jTable3.getSelectedRow(),2).toString());
-        		String telefone = modeloEmprestimo.getValueAt(jTable3.getSelectedRow(),3).toString();
-        		String endereco = modeloEmprestimo.getValueAt(jTable3.getSelectedRow(),4).toString();
-        		
-        		new AtualizacaoEmprestimo(id,leitor,endereco,telefone,livro).setVisible(true);
-        		
-        	}
-        });
-        popupMenu_2.add(mntmModificar_2);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -591,16 +437,6 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private JPopupMenu popupMenu;
-    private JMenuItem mntmRemover;
-    private JPopupMenu popupMenu_1;
-    private JMenuItem mntmRemover_1;
-    private JPopupMenu popupMenu_2;
-    private JMenuItem mntmRemover_2;
-    private JMenuItem mntmExecutarDevoluo;
-    private JMenuItem mntmModificar;
-    private JMenuItem mntmModificar_1;
-    private JMenuItem mntmModificar_2;
     // End of variables declaration//GEN-END:variables
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
