@@ -80,7 +80,7 @@ public class CadastroLivro extends javax.swing.JFrame {
         		String autor = ((Autor) modeloAutor.getSelectedItem()).toString();
         		
         		if(isbn.isEmpty()||titulo.isEmpty()||modeloAutor.getSelectedItem()==null) {
-        			JOptionPane.showMessageDialog(null,"Preencha os campos (o campo 'Gênero' é opcional)","Preencha os campos!",JOptionPane.INFORMATION_MESSAGE);
+        			JOptionPane.showMessageDialog(null,"Preencha os campos (o campo 'Gï¿½nero' ï¿½ opcional)","Preencha os campos!",JOptionPane.INFORMATION_MESSAGE);
         			return;
         		}
         		
@@ -118,7 +118,7 @@ public class CadastroLivro extends javax.swing.JFrame {
         lblIsbn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIsbn.setText("ISBN:");
 
-        lblGenero.setText("Gênero:");
+        lblGenero.setText("GÃªnero");
 
         jButton1.setText("Cadastrar");
 

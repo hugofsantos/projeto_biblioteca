@@ -68,7 +68,7 @@ public class RegistroEmprestimo extends javax.swing.JFrame {
         		String livro = ((Livro) modelo.getSelectedItem()).getIsbn();
         		
         		if(leitor.isEmpty()||modelo.getSelectedItem()==null) {
-        			JOptionPane.showMessageDialog(null,"Verifique se todos os campos estão preenchidos!","ERRO",JOptionPane.INFORMATION_MESSAGE);
+        			JOptionPane.showMessageDialog(null,"Verifique se todos os campos estï¿½o preenchidos!","ERRO",JOptionPane.INFORMATION_MESSAGE);
         			return;
         		}
         		
@@ -96,14 +96,14 @@ public class RegistroEmprestimo extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("REGISTRO DE EMPRÉSTIMO");
+        jLabel2.setText("REGISTRO DE EMPRÃ‰STIMO");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Nome do leitor:");
 
-        jLabel3.setText("Endereço:");
+        jLabel3.setText("EndereÃ§o:");
 
         jButton1.setText("Cadastrar");
 
